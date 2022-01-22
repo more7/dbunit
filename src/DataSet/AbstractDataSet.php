@@ -79,6 +79,7 @@ abstract class AbstractDataSet implements IDataSet
      *
      * @return ITableIterator
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return $this->createIterator();
@@ -89,6 +90,7 @@ abstract class AbstractDataSet implements IDataSet
      *
      * @return ITableIterator
      */
+    #[\ReturnTypeWillChange]
     public function getReverseIterator()
     {
         return $this->createIterator(true);
@@ -130,5 +132,6 @@ abstract class AbstractDataSet implements IDataSet
      *
      * @return ITableIterator
      */
+    #[\ReturnTypeWillChange]
     abstract protected function createIterator($reverse = false);
 }
