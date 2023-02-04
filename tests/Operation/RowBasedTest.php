@@ -19,6 +19,7 @@ use PHPUnit\DbUnit\DataSet\ITableMetadata;
 use PHPUnit\DbUnit\Operation\Exception as OperationException;
 use PHPUnit\DbUnit\Operation\RowBased;
 use PHPUnit\DbUnit\TestCase;
+use PHPUnit\Framework\MockObject\Rule\InvokedAtIndex;
 
 require_once \dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR . 'DatabaseTestUtility.php';
 
@@ -216,5 +217,10 @@ class Extensions_Database_Operation_RowBasedTest extends TestCase
         $mockOperation->expects($this->exactly($rowCount))->method('buildOperationArguments')->will($this->returnValue([]));
 
         $mockOperation->execute($mockConnection, $mockDataSet);
+    }
+
+    public static function at(int $index): InvokedAtIndex
+    {
+        return new InvokedAtIndex($index);
     }
 }
