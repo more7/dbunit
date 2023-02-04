@@ -252,10 +252,18 @@ class Extensions_Database_DataSet_ReplacementTableTest extends \PHPUnit\Framewor
         $table         = $this->createMock(ITable::class);
         $otherTable    = $this->createMock(ITable::class);
 
-        $replacementTable = $this->getMockBuilder(ReplacementTable::class)
+        $phpUnitVersion = PHPUnit\Runner\Version::id();
+        if (version_compare($phpUnitVersion, '10.0.0', '>=')) {
+            $replacementTable = $this->getMockBuilder(ReplacementTable::class)
+                                 ->setConstructorArgs([$table])
+                                 ->onlyMethods(['getRowCount'])
+                                 ->getMock();
+        } else {
+            $replacementTable = $this->getMockBuilder(ReplacementTable::class)
                                  ->setConstructorArgs([$table])
                                  ->setMethods(['getRowCount'])
                                  ->getMock();
+        }
 
         $table->expects($this->once())
             ->method('getTableMetaData')
@@ -311,10 +319,18 @@ class Extensions_Database_DataSet_ReplacementTableTest extends \PHPUnit\Framewor
             ->with($otherMetaData)
             ->will($this->returnValue(true));
 
-        $replacementTable = $this->getMockBuilder(ReplacementTable::class)
+        $phpUnitVersion = PHPUnit\Runner\Version::id();
+        if (version_compare($phpUnitVersion, '10.0.0', '>=')) {
+            $replacementTable = $this->getMockBuilder(ReplacementTable::class)
+                                 ->setConstructorArgs([$table])
+                                 ->onlyMethods(['getRowCount', 'getValue'])
+                                 ->getMock();
+        } else {
+            $replacementTable = $this->getMockBuilder(ReplacementTable::class)
                                  ->setConstructorArgs([$table])
                                  ->setMethods(['getRowCount', 'getValue'])
                                  ->getMock();
+        }
 
         $replacementTable->expects($this->any())
             ->method('getRowCount')
@@ -339,7 +355,7 @@ class Extensions_Database_DataSet_ReplacementTableTest extends \PHPUnit\Framewor
         $this->assertSame($matches, $replacementTable->matches($otherTable));
     }
 
-    public function providerMatchesWithColumnValueComparisons()
+    public static function providerMatchesWithColumnValueComparisons()
     {
         return [
 
