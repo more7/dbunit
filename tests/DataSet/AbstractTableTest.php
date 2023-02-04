@@ -48,7 +48,7 @@ class Extensions_Database_DataSet_AbstractTableTest extends TestCase
         $this->assertEquals($exists, $result);
     }
 
-    public function providerTableContainsRow()
+    public static function providerTableContainsRow()
     {
         return [
             [['id' => 1, 'column1' => 'randomValue'], true],
@@ -81,10 +81,18 @@ class Extensions_Database_DataSet_AbstractTableTest extends TestCase
         $otherMetaData = $this->createMock(ITableMetadata::class);
         $otherTable    = $this->createMock(ITable::class);
 
-        $table = $this->getMockBuilder(DefaultTable::class)
+        $phpUnitVersion = PHPUnit\Runner\Version::id();
+        if (version_compare($phpUnitVersion, '10.0.0', '>=')) {
+            $table = $this->getMockBuilder(DefaultTable::class)
+                      ->setConstructorArgs([$tableMetaData])
+                      ->onlyMethods(['getRowCount'])
+                      ->getMock();
+        } else {
+            $table = $this->getMockBuilder(DefaultTable::class)
                       ->setConstructorArgs([$tableMetaData])
                       ->setMethods(['getRowCount'])
                       ->getMock();
+        }
 
         $otherTable->expects($this->once())
             ->method('getTableMetaData')
@@ -116,10 +124,18 @@ class Extensions_Database_DataSet_AbstractTableTest extends TestCase
         $otherMetaData = $this->createMock(ITableMetadata::class);
         $otherTable    = $this->createMock(ITable::class);
 
-        $table = $this->getMockBuilder(DefaultTable::class)
+        $phpUnitVersion = PHPUnit\Runner\Version::id();
+        if (version_compare($phpUnitVersion, '10.0.0', '>=')) {
+            $table = $this->getMockBuilder(DefaultTable::class)
+                      ->setConstructorArgs([$tableMetaData])
+                      ->onlyMethods(['getRowCount', 'getValue'])
+                      ->getMock();
+        } else {
+            $table = $this->getMockBuilder(DefaultTable::class)
                       ->setConstructorArgs([$tableMetaData])
                       ->setMethods(['getRowCount', 'getValue'])
                       ->getMock();
+        }
 
         $otherTable->expects($this->once())
             ->method('getTableMetaData')
@@ -159,7 +175,7 @@ class Extensions_Database_DataSet_AbstractTableTest extends TestCase
         $this->assertSame($matches, $table->matches($otherTable));
     }
 
-    public function providerMatchesWithColumnValueComparisons()
+    public static function providerMatchesWithColumnValueComparisons()
     {
         return [
 
