@@ -1,4 +1,4 @@
-This is a fork which provides support for phpunit 8. [Original extension is no longer maintained](https://github.com/sebastianbergmann/dbunit/issues/217)
+This is a fork which provides support for phpunit 10. [Original extension is no longer maintained](https://github.com/sebastianbergmann/dbunit/issues/217)
 
 # DbUnit
 
@@ -11,5 +11,5 @@ This is a fork which provides support for phpunit 8. [Original extension is no l
 If you use [Composer](https://getcomposer.org/) to manage the dependencies of your project then you can add DbUnit as a development-time dependency to your project:
 
 ```
-$ composer require --dev kornrunner/dbunit
+$ composer require --dev more7/dbunit
 ```
