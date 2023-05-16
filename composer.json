@@ -1,5 +1,5 @@
 {
-    "name": "kornrunner/dbunit",
+    "name": "more7/dbunit",
     "description": "PHPUnit extension for database interaction testing",
     "type": "library",
     "keywords": [
